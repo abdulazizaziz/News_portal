@@ -1,0 +1,42 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block home %}
+  
+<div class="container pt-5 col-6 bg-light py-4">
+    <h1 class="text-center" style="color: #6687b2">Add User</h1>
+  <form action="{% url 'admin_panel:create_user' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if same %}
+            <div class="alert alert-danger" role="alert">
+                <strong>User Already taken user other</strong>
+            </div>
+        {% endif %}
+      <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" name="name" autocomplete="off" placeholder="Full Name" required>
+      </div>
+      
+      <div class="mb-3">
+        <label for="user" class="form-label">User</label>
+        <input type="text" class="form-control" id="user" name="user" autocomplete="off" placeholder="User" required>
+      </div>
+      
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" autocomplete="off" placeholder="password" required>
+      </div>
+      
+      <div class="mb-3">
+        <label for="role" class="form-label">Role</label>
+        <select class="form-control" name="role" id="role">
+            <option value="0">Normal User</option>
+            <option value="1">Admin User</option>
+        </select>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</div>
+
+{% endblock home %}

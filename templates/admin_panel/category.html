@@ -1,0 +1,46 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+
+{% block home %}
+<style>
+    .category_page{
+        background-color: #6687B2;
+    }
+</style>  
+
+
+<div class="container">
+    <div class="admin_posts rounded mt-4 p-3" style="background-color: rgba(0,0,0,.5)!important;">
+        <div class="col-12">
+            <h1 class="text-light d-inline">All Categorys</h1>
+            <button style="float: right!important;" class="btn mr-auto button"><a class="text-light" href="{% url 'admin_panel:create_category' %}"> Add Category </a></button>
+        </div>
+        <table class="table table-light table-striped text-center">
+            <thead>
+                <tr class="bg-dark text-light">
+                    <th class="col-2 bg-dark">S.NO.</th>
+                    <th class="col-4 bg-dark">CATEGORY NAME</th>
+                    <th class="bg-dark">NO. OF POSTS</th>
+                    <th class="col-1 bg-dark">EDIT</th>
+                    <th class="col-1 bg-dark">DELETE</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for category in categorys %}
+                    <tr>
+                        <td>{{category.id}}</td>
+                        <td>{{category.category_name}}</td>
+                        <td>{{category.category_post}}</td>
+                        <td><a href="{% url 'admin_panel:update_category' category.id %}"><i class="fa fa-edit text-warning"></i></a></td>
+                        <td><a href="{% url 'admin_panel:delete_category' category.id %}"><i class="fa fa-trash text-danger"></i></a></td>
+                    </tr>                  
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock home %}

@@ -1,0 +1,60 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+
+{% block home %}
+<style>
+    .users_page{
+        background-color: #6687B6;
+    }
+</style>  
+
+
+<div class="container">
+    <div class="admin_posts rounded mt-4 p-3" style="background-color: rgba(0,0,0,.5)!important;">
+        <div class="col-12">
+            <h1 class="text-light d-inline">Users</h1>
+            <button style="float: right!important;" class="btn mr-auto button">
+                <a class="text-light" href="{% url 'admin_panel:create_user' %}">
+                    Add User 
+                </a>
+            </button>
+        </div>
+        <table class="table table-light table-striped text-center">
+            <thead>
+                <tr class="bg-dark text-light">
+                    <th class="col-2 bg-dark">S.NO.</th>
+                    <th class="col-4 bg-dark">NAME</th>
+                    <th class="bg-dark">USER</th>
+                    <th class="bg-dark">ROLE</th>
+                    <!-- <th class="col-1 bg-dark">EDIT</th> -->
+                    <th class="col-1 bg-dark">DELETE</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for user in users %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.user}}</td>
+                    {% if user.role %}
+                    <td> Admin </td>
+                    {% else %}
+                    <td> Normal </td>
+                    {% endif %}
+                    {% comment %} <td><a href="{% url 'admin_panel:update_user' user.id %}"><i class="fa fa-edit text-warning"></i></a></td> {% endcomment %}
+                    {% if admin_id == user.id %}
+                        <td class="text-primary">Active</td>
+                    {% else %}
+                        <td><a href="{% url 'admin_panel:delete_user' user.id %}"><i class="fa fa-trash text-danger"></i></a></td>
+                    {% endif %}
+                    </tr>                  
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock home %}

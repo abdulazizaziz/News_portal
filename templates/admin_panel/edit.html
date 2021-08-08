@@ -1,0 +1,42 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+
+{% block home %}
+    
+<div class="container pt-5 col-6 bg-light py-4">
+    <h1 class="text-center text-dark">EDIT NEWS</h1>
+  <form action="{% url 'admin_panel:update' post.id %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{post.title}}" autocomplete="off" placeholder="News Title" required>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" id="description" cols="30" rows="10" class="form-control" placeholder="News Description" required>{{post.description}}</textarea>
+      </div>
+      <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+          <select name="category" id="category" class="form-control" required>
+              {% comment %} <option selected disabled>Category</option> {% endcomment %}
+              {% for category in categorys %}
+              <option
+                {% if category.id == post.category.id %}
+                  selected
+                {% endif %}
+              value="{{category.id}}">{{category.category_name}}</option>
+              {% endfor %}
+          </select>
+      </div>
+      <div class="mb-3">
+        <input type="file" id="img" name="img" class="form-control d-none">
+      </div>
+      <label for="img" class="btn button col-6" style="border-radius: 4px 4px 0 0;">Upload Image</label>
+      <img src="{{post.img.url}}" width="50%" style="display: block" id="image">
+      
+      <button type="submit" class="btn btn-primary mt-3">Update</button>
+  </form>
+</div>
+
+{% endblock home %}

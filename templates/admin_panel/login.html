@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome/css/font-awesome.css" %}" rel="stylesheet">
+    <link rel="icon" href="{% static 'icons/logo.png' %}">
+    <title>{{title}}</title>
+</head>
+<body>
+    <div class="main_div">
+        <div class="login col-xl-3 col-lg-4 col-md-6 col-8 p-4">
+            <h1 class="text-center py-4">LOGIN <i class="fa fa-user-o"></i> </h1>
+
+            <form action="{% url 'admin_panel:login' %}" method="POST">
+
+                {% csrf_token %}
+
+
+                <label for="user" class="user_label">Enter User</label>
+                <input type="text" name="user" id="user" class="col-12" onfocus="Focus(this)" onblur="Blur(this)" autocomplete="off" required>
+                <div class="inputcolor mb-3 first"></div>
+
+                <label for="password" class="password_label">Enter Password</label>
+                <input type="password" name="password" id="password" class="col-12" onfocus="Focus(this)" onblur="Blur(this)" autocomplete="off" required>
+                <div class="inputcolor mb-5 second"></div>
+
+                <button type="submit" class="btn button" id="button">Login</button>    
+            </form>
+            
+            {% if wrong %}
+            <div class="alert alert-danger alert-dismissible fade show text-center mt-5" role="alert">
+                <strong>Wrong User and Password</strong>
+            </div>
+            {% endif %}
+
+
+        </div>
+    </div>
+
+    <script>
+        user = document.getElementById('user')
+        password = document.getElementById('password')
+        button = document.getElementById('button')
+
+        user.addEventListener('keyup', buttonFunc)
+        password.addEventListener('keyup', buttonFunc)
+
+
+        button.disabled = "disabled"
+        
+        function buttonFunc(){
+            if(user.value == "" || password.value == ""){
+                button.disabled = "disabled"
+            }else{
+                button.disabled = ""
+            }
+        }
+
+        function Focus(elem){
+            elem.previousElementSibling.style.bottom = "0"
+        }
+        function Blur(elem){
+            if(elem.value == ""){
+                elem.previousElementSibling.style.bottom = "-20px"
+            }
+        }
+    </script>
+    <script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
+</body>
+</html>

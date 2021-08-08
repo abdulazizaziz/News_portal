@@ -1,0 +1,49 @@
+{% extends "admin_panel/base.html" %}
+{% load static %}
+
+{% block home %}
+<style>
+    .post_page{
+        background-color: #6687B2;
+    }
+</style>
+
+
+<div class="container">
+    <div class="admin_posts rounded mt-4 p-3" style="background-color: rgba(0,0,0,.5)!important;">
+        <div class="col-12">
+            <h1 class="text-light d-inline">All Posts</h1>
+            <button style="float: right!important;" class="btn mr-auto button"><a class="text-light" href="{% url 'admin_panel:create' %}"> Add Post </a></button>
+        </div>
+        <table class="table table-light table-striped">
+            <thead>
+                <tr class="bg-dark text-light">
+                    <!-- <th class="col-1">ID</th> -->
+                    <th class="col-4 bg-dark text-center">TITLE</th>
+                    <th class="bg-dark">CATEGORY</th>
+                    <th class="bg-dark">DATE</th>
+                    <th class="bg-dark">AUTHOR</th>
+                    <th class="col-1 bg-dark">EDIT</th>
+                    <th class="col-1 bg-dark">DELETE</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for post in posts %}
+                    <tr>
+                        <!-- <td>{{post.id}}</td> -->
+                        <td>{{post.title}}</td>
+                        <td>{{post.category.category_name}}</td>
+                        <td>{{post.post_date}}</td>
+                        <td>{{post.author.name}}</td>
+                        <td><a href="{% url 'admin_panel:edit' post.id %}"><i class="fa fa-edit text-warning"></i></a></td>
+                        <td><a href="{% url 'admin_panel:delete' post.id %}"><i class="fa fa-trash text-danger"></i></a></td>
+                    </tr>                  
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock home %}

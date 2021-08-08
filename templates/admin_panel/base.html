@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/main.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome/css/font-awesome.css" %}" rel="stylesheet">
+    <link rel="icon" href="{% static "icons/admin.png" %}">
+    <title>Admin - {{title}}</title>
+  </head>
+  <body style="background-color: #f1f1f1;">
+    <div class="header col-lg-4">
+        <div class="header-content">
+            <a href="{% url 'admin_panel:main_page' %}">
+                <h1 class="text-light float-left"> <span class="text-dark">ADMIN</span> PANEL</h1>
+            </a>
+        </div>
+    </div>
+    <nav id="nav">
+        <h4 id="logout">{{user}} <a href="{% url 'admin_panel:logout' %}" class="text-secondary">LOGOUT</a> </h4>
+        <div class="container">
+            <ul>
+                <a href="{% url 'admin_panel:main_page' %}"><li class="post_page">post</li></a>
+                <a href="{% url 'admin_panel:category' %}"><li class="category_page">category</li></a>
+                {% if role %}
+                    <a href="{% url 'admin_panel:users' %}"><li class="users_page">users</li></a>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    
+    
+    {% block home %}{% endblock home %}
+    {% block scriptblock %} {% endblock scriptblock %}
+    <script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "js/imag_preview.js" %}"></script>
+</body>
+</html>

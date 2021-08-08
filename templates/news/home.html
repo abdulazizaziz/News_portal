@@ -1,0 +1,263 @@
+{% extends "news/index.html" %}
+{% load static %}
+{% block home %}
+
+
+<div class="container pt-4">
+    <div class="row">
+        <div id="small_screen" class="col-lg-4 px-3 mt-lg-0 mt-sm-5 recent mb-5">
+            <div class="bg-light rounded p-3">
+                <div id="line"></div>
+                <h1 id="for_line">SEARCH</h1>
+                <div id="search" class="search">
+                        <div class="col-12 row m-0 search2">
+                            <div class="col-9 m-0 p-0 float-left">
+                                <input id="search_char" type="text" class="small_input form-control" placeholder="search ...">
+                            </div>
+                            <div class="col-3 float-left m-0 p-0">
+                                <button id="search_btn" type="button" class="small btn btn-danger col-12"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <br>
+            <div class="bg-light rounded py-3 recent_box">
+                <div class="p-3 pt-0">
+                    <div id="line" class="ml-3"></div>
+                    <h1 id="for_line">RECENT NEWS</h1>
+                </div>
+                <div style="display: flex;" class="recent_photos">
+                    {% for post in recent %}
+                        <div class="recent_items">
+                            <a href="{% url 'news:post' post.id %}">
+                                <div class="recent_img" style="background-image: url('{{post.img.url}}');">
+                                    <div class="img_child">
+                                        See More
+                                    </div>
+                                </div>
+                            </a>
+                            <h3 class="text-warning">{{post.title}}</h3>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-8 col-md-12 px-3">
+            <div class="bg-light rounded p-3">
+                {% if active %}
+                    <h2>{{active}} News</h2>
+                    <hr>
+                {% endif %}
+                {% for post in posts %}
+                {% if post %}
+                  
+                <div class="post" style="display: none">
+                    <a href="{% url 'news:post' post.id %}">
+                        {% if post.img %}
+                        <div class="image" style='background-image: url(" {{post.img.url}} ");'></div> 
+                        {% endif %}
+                    </a>
+                    <div class="post_content">
+                        <h1 class="post_title">{{post.title}}</h1>
+                        <p class="post_type">{{post.category.category_name}} | {{post.post_date}}</p>
+                        <p class="post_detail"> 
+                            <span class="description">
+                                {{post.description}}
+                            </span>
+                            <a href="{% url 'news:post' post.id %}">
+                                <button class="btn btn-sm">Read more</button>    
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <h1 id="no_item"></h1>
+            </div>
+        </div>
+        
+
+        <div class="col-lg-4 px-3 mt-lg-0 mt-sm-5 recent">
+            <div class="bg-light rounded p-3">
+                <div id="line"></div>
+                <h1 id="for_line">SEARCH</h1>
+                <div id="search" class="search">
+                    <!-- <form> -->
+                        <div class="col-12 row m-0 search2">
+                            <div class="col-9 m-0 p-0 float-left">
+                                <input type="text" class="larg_input form-control" placeholder="search ...">
+                            </div>
+                            <div class="col-3 float-left m-0 p-0">
+                                <button type="button" class="larg btn btn-danger col-12"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+            <br>
+            <div class="bg-light rounded py-3 recent_box">
+                <div class="p-3 pt-0">
+                    <div id="line" class="ml-3"></div>
+                    <h1 id="for_line">RECENT NEWS</h1>
+                </div>
+                <div style="display: flex;" class="recent_photos">
+                    {% for post in recent %}
+                        <div class="recent_items">
+                            <a href="{% url 'news:post' post.id %}">
+                                <div class="recent_img" style="background-image: url('{{post.img.url}}');">
+                                    <div class="img_child">
+                                        See More
+                                    </div>
+                                </div>
+                            </a>
+                            <h3 class="text-warning">{{post.title}}</h3>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pagination">
+    <ul id="pagination">
+        <li style="width: 60px; border-radius: 4px 0 0 4px;" id='prev' onclick="prev()">Prev</li>
+        <!-- <script>
+            for(i=1;i<=total;i++){
+                document.write(`
+                <li class="page_item" onclick='pagination("${i}")')>${i}</li>
+                `)
+            }
+        </script> -->
+        <li style="width: 60px; border-radius: 0 4px 4px 0;" id='next' onclick="next()">Next</li>
+    </ul>
+</div>
+{% endblock home %}
+
+{% block scriptblock %}
+<script>
+    var new_description = null
+    var new_title = null
+    var post = document.querySelectorAll('.post')
+    var title = document.querySelectorAll('.post_title')
+    var description = document.querySelectorAll('.description')
+    
+    for(var j=0;j<description.length;j++){
+        if(description[j].innerHTML.trim().length > 130){
+            new_description = description[j].innerHTML.trim().slice(0,130)
+            description[j].innerHTML = new_description + " ...."
+        }
+    }
+    
+    
+    for(var j=0;j<title.length;j++){
+        if(title[j].innerHTML.trim().length > 17){
+            new_title = title[j].innerHTML.trim().slice(0,17)
+            title[j].innerHTML = new_title + " ...."
+        }
+    }
+    
+
+    if(post.length==0){
+        document.getElementById('no_item').innerHTML = "This Category Has no <span class='text-danger'>POST</span> right now"
+    }
+    
+    
+    var ID=1
+    const limit = 3
+    var total = Math.ceil( post.length / limit )    
+
+
+    window.addEventListener('resize',resize)
+    function resize(){
+        if(window.innerWidth <= 991){
+            document.querySelector('.larg').id = ''
+            document.querySelector('.larg_input').id = ''
+
+            document.querySelector('.small').id = 'search_btn'
+            document.querySelector('.small_input').id = 'search_char'
+        }else{
+            document.querySelector('.small').id = ''
+            document.querySelector('.small_input').id = ''
+            
+            document.querySelector('.larg').id = 'search_btn'
+            document.querySelector('.larg_input').id = 'search_char'
+        }
+
+        var button = document.getElementById('search_btn')
+        button.addEventListener('click',search)
+        document.getElementById("search_char").addEventListener("keyup",search)
+    }
+    resize()
+    
+
+
+    var page = document.getElementById('pagination')
+
+    
+    for(i=1;i<=total;i++){
+        var li = document.createElement('li')
+        var li_nu = document.createTextNode(i)
+        li.appendChild(li_nu)
+        var loc = page.childNodes.length-2
+        page.insertBefore(li,page.childNodes[loc])
+        page.childNodes[loc].classList.add('page_item')
+    }
+
+
+    function pagination(id){
+            ID = Number(id)
+            var page_item = document.querySelectorAll('.page_item')
+            for(var j=0;j<page_item.length;j++){
+                page_item[j].classList.remove('active')
+            }
+            page_item[id-1].classList.add('active')
+            
+            
+            for(let i=0;  i<post.length;  i++){
+                post[i].style.display = "none"
+            }
+            for(let i=id*limit-limit;  i<id*limit;  i++){
+                if(post[i]){
+                    post[i].style.display = "block"
+                }
+            }
+
+            if(ID==1){
+                document.getElementById('prev').style.display = "none"
+            }else{
+                document.getElementById('prev').style.display = "inline-block"
+            }
+            
+            if(ID==page_item.length){
+                document.getElementById('next').style.display = "none"
+            }else{
+                document.getElementById('next').style.display = "inline-block"
+            }
+        }
+        
+        
+        
+        window.addEventListener('load', pagination(ID))
+        
+        
+        
+        function next(){
+            ID=ID+1
+            pagination(ID)
+        }
+        
+        function prev(){
+            ID=ID-1
+            pagination(ID)
+        }
+
+
+        var page_item = document.querySelectorAll('.page_item')
+        for(i=0;i<page_item.length;i++){
+            var val = page_item[i].innerHTML
+            page_item[i].setAttribute('onclick', `pagination(${val})`)
+        }
+</script>
+{% endblock scriptblock %}

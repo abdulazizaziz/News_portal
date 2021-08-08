@@ -1,0 +1,74 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.main_div{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url('../../media/picture/bg.jpg');
+    background-position: center;
+    background-size: cover;
+}
+.login{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    /* text-align: center; */
+    background-color: white;
+    border-radius: 20px;
+}
+.login h1{
+    color: #6687b2!important;
+    font-weight: 600;
+}
+.login form label{
+    position: relative;
+    bottom: -20px;
+    cursor: text;
+    transition-duration: .2s;
+}
+.login form input{
+    border: none;
+    border-bottom: 0px solid black;
+    transition-duration: .1s;
+    
+}
+.login form input:focus{
+    outline: none;
+}
+.inputcolor{
+    width: 0;
+    height: 2px;
+    background-color: #6687b2;
+    transition-duration: .1s;
+    margin: auto;
+}
+.login form input[type=text]:focus ~ .first, .login form input[type=password]:focus ~ .second{
+    width: 100%;
+}
+.login form input[type=text]:focus ~ .user_label, .login form input[type=password]:focus ~ .password_label{
+    bottom: 20px;
+}
+#button{
+    border-radius: 3!important;
+    background-color: #6687b2!important;
+    border: 1px solid #6687b2!important;
+    color: white!important;
+    font-weight: bold!important;
+    transition-duration: .3s!important;
+    border: none!important;
+}
+#button:hover{
+    box-shadow: 0 0 10px #6687b2!important;
+    color: white!important;
+}
+#button:focus{
+    border: none!important;
+    box-shadow: none!important;
+    outline: none!important;
+}

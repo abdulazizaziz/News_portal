@@ -1,0 +1,18 @@
+{% extends "news/index.html" %}
+{% block home %}
+  
+    <div id="post" class="col-8 m-auto bg-light mt-3 rounded p-3">
+        <h2 class="mt-4" style="font-weight: bold; color: #6687b2;">{{post.title}}</h2>
+        <h5>{{post.category.category_name}}  ||  {{post.post_date}}</h5>
+        <div style="display: flex; justify-content: center;">
+            <img src="{{post.img.url}}" class="col-lg-6 col-md-8 col-sm-10 col-12">
+        </div>
+        <p>{{post.description}}</p>
+    </div>
+
+{% endblock home %}
+
+
+{% block scriptblock %}
+
+{% endblock scriptblock %}
